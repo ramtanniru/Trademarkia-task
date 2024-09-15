@@ -118,7 +118,7 @@ export default function SearchResults({searchKey}) {
     return (
         <div className="p-8 px-20 bg-gray-100 min-h-screen flex flex-col gap-5">
         <h2 className="text-2xl mb-4 text-black">
-            About {results.length} Trademarks found for "{searchKey}"
+            About {results.length} Trademarks found for {`"${searchKey}"`}
         </h2>
         <hr />
         <div className="flex flex-row gap-5 justify-start items-start">
