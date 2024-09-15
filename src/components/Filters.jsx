@@ -9,7 +9,7 @@ const statusOptions = [
   { name: 'Others', value: 'others', color: '#4380EC' }
 ];
 
-export default function Filters({ setFilters, filters, results }) {
+export default function Filters({ setFilters, filters, results, isGridView, setIsGridView }) {
 
   const [ownerOptions,setOwnerOptions] = useState([]);
   const [lawFirmOptions,setLawFirmOptions] = useState([]);
@@ -61,9 +61,9 @@ export default function Filters({ setFilters, filters, results }) {
   }
 
   return (
-    <div className='flex flex-col gap-10 justify-center items-center'>
+    <div className='flex flex-col gap-5 justify-center items-center'>
+      {/* Status Filter */}
       <div className="flex flex-col gap-3 justify-center items-start w-full bg-white p-5 rounded-2xl">
-        {/* Status Filter */}
         <h1 className="text-lg font-semibold text-black">Status</h1>
         <div className="flex flex-wrap gap-3">
           {statusOptions.map((item) => {
@@ -82,69 +82,84 @@ export default function Filters({ setFilters, filters, results }) {
             );
           })}
         </div>
-        </div>
+      </div>
 
-        {/* Other Filters */}
-        <div className="flex flex-col gap-5 justify-center items-center w-full bg-white p-5 rounded-2xl">
-          <div className="flex flex-col w-full gap-4">
-            <Tabs key={'underlined'} variant={'underlined'} aria-label="Tabs variants" color='primary'>
-              <Tab key="owners" title="Owners">
-                <div className="flex flex-col gap-2">
-                  {ownerOptions.map((owner) => {
-                    const isActive = filters['owners'].includes(owner);
-                    return (
-                      <div key={owner} className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={filters.owners.includes(cleanData(owner))}
-                          onClick={() => handleFilterChange('owners',cleanData(owner))}
-                          className="form-checkbox h-5 w-5"
-                        />
-                        <label className={isActive ? 'text-blue-500' : 'text-black'}>{owner}</label>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Tab>
-              <Tab key="law_firms" title="Law Firms">
-                <div className="flex flex-col gap-2">
-                  {lawFirmOptions.map((firm) => {
-                    const isActive = filters['law_firms'].includes(firm);
-                    return (
-                      <div key={firm} className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={filters.law_firms.includes(cleanData(firm))}
-                          onClick={() => handleFilterChange('law_firms',cleanData(firm))}
-                          className="form-checkbox h-5 w-5"
-                        />
-                        <label className={isActive ? 'text-blue-500' : 'text-black'}>{firm}</label>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Tab>
-              <Tab key="attorneys" title="Attorneys">
-                <div className="flex flex-col gap-2">
-                  {attorneyOptions.map((attorney) => {
-                    const isActive = filters['attorneys'].includes(attorney);
-                    return (
-                      <div key={attorney} className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={filters.attorneys.includes(cleanData(attorney))}
-                          onClick={() => handleFilterChange('attorneys',cleanData(attorney))}
-                          className="form-checkbox h-5 w-5"
-                        />
-                        <label className={isActive ? 'text-blue-500' : 'text-black'}>{attorney}</label>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Tab>
-            </Tabs>
-          </div>
+      {/* Other Filters */}
+      <div className="flex flex-col w-full gap-3 bg-white p-5 rounded-2xl">
+        <Tabs key={'underlined'} variant={'underlined'} aria-label="Tabs variants" color='primary'>
+          <Tab key="owners" title="Owners">
+            <div className="flex flex-col gap-2">
+              {ownerOptions.map((owner) => {
+                const isActive = filters['owners'].includes(owner);
+                return (
+                  <div key={owner} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.owners.includes(cleanData(owner))}
+                      onClick={() => handleFilterChange('owners',cleanData(owner))}
+                      className="form-checkbox h-5 w-5"
+                    />
+                    <label className={isActive ? 'text-blue-500' : 'text-black'}>{owner}</label>
+                  </div>
+                );
+              })}
+            </div>
+          </Tab>
+          <Tab key="law_firms" title="Law Firms">
+            <div className="flex flex-col gap-2">
+              {lawFirmOptions.map((firm) => {
+                const isActive = filters['law_firms'].includes(firm);
+                return (
+                  <div key={firm} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.law_firms.includes(cleanData(firm))}
+                      onClick={() => handleFilterChange('law_firms',cleanData(firm))}
+                      className="form-checkbox h-5 w-5"
+                    />
+                    <label className={isActive ? 'text-blue-500' : 'text-black'}>{firm}</label>
+                  </div>
+                );
+              })}
+            </div>
+          </Tab>
+          <Tab key="attorneys" title="Attorneys">
+            <div className="flex flex-col gap-2">
+              {attorneyOptions.map((attorney) => {
+                const isActive = filters['attorneys'].includes(attorney);
+                return (
+                  <div key={attorney} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={filters.attorneys.includes(cleanData(attorney))}
+                      onClick={() => handleFilterChange('attorneys',cleanData(attorney))}
+                      className="form-checkbox h-5 w-5"
+                    />
+                    <label className={isActive ? 'text-blue-500' : 'text-black'}>{attorney}</label>
+                  </div>
+                );
+              })}
+            </div>
+          </Tab>
+        </Tabs>
+      </div>
+
+      {/* Toggle view */}
+      <div className='flex flex-col gap-3 justify-center items-start w-full bg-white p-5 rounded-2xl'>
+        <h1 className="text-lg font-semibold text-black">Display</h1>
+        <div className="flex w-full gap-2 bg-gray-100 p-2 rounded-lg">
+          <button
+            className={`text-black w-1/2 py-2 px-4 rounded-lg ${isGridView ? 'bg-white shadow-md' : 'bg-transparent'}`}
+            onClick={() => setIsGridView(true)}>
+            Grid View
+          </button>
+          <button
+            className={`text-black w-1/2 py-2 px-4 rounded-lg ${!isGridView ? 'bg-white shadow-md' : 'bg-transparent'}`}
+            onClick={() => setIsGridView(false)}>
+            List View
+          </button>
         </div>
+      </div>
     </div>
   );
 }

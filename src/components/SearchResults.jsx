@@ -41,6 +41,7 @@ export default function SearchResults({searchKey}) {
     const [filteredResults,setFilteredResults] = useState([]);
     const [filterVisible, setFilterVisible] = useState(true);
     const [filters, setFilters] = useState(initialFilters);
+    const [isGridView,setIsGridView] = useState(true);
 
     useEffect(() => {
         setFilters(prevFilters => ({
@@ -118,7 +119,7 @@ export default function SearchResults({searchKey}) {
     return (
         <div className="p-8 px-20 bg-gray-100 min-h-screen flex flex-col gap-5">
         <h2 className="text-2xl mb-4 text-black">
-            About {results.length} Trademarks found for {`"${searchKey}"`}
+            About {filteredResults.length} Trademarks found for {`"${searchKey}"`}
         </h2>
         <hr />
         <div className="flex flex-row w-full gap-5 justify-start items-start">
@@ -224,30 +225,30 @@ export default function SearchResults({searchKey}) {
             </div>
     
             {/* Filters Section */}
-            <div className="flex flex-col gap-10 w-1/5 justify-center items-center">
-            <div className="flex flex-row justify-center items-center gap-5">
-                <button
-                className={`flex flex-row justify-center items-center border border-[#C8C8C8] ${
-                    filterVisible ? 'rounded-xl' : 'rounded-3xl'
-                } p-2`}
-                onClick={() => setFilterVisible(!filterVisible)}
-                >
-                <Image src={'/icons/filter.svg'} width={25} height={25} alt="filter" />
-                {filterVisible && <p className="text-black">Filter</p>}
-                </button>
-                <button className="flex flex-row border border-[#C8C8C8] rounded-3xl p-2">
-                <Image src={'/icons/share.svg'} width={25} height={25} alt="share" />
-                </button>
-                <button className="flex flex-row border border-[#C8C8C8] rounded-3xl p-2">
-                <Image src={'/icons/sort.svg'} width={25} height={25} alt="sort" />
-                </button>
-            </div>
-    
-            {filterVisible && (
-                <div className='w-full'>
-                    <Filters setFilters={(value) => setFilters(value)} filters={filters} results={results}/>
+            <div className="flex flex-col gap-5 w-1/5 justify-center items-center">
+                <div className="flex flex-row justify-center items-center gap-5">
+                    <button
+                    className={`flex flex-row justify-center items-center border border-[#C8C8C8] ${
+                        filterVisible ? 'rounded-xl px-5' : 'rounded-3xl'
+                    } p-2`}
+                    onClick={() => setFilterVisible(!filterVisible)}
+                    >
+                    <Image src={'/icons/filter.svg'} width={25} height={25} alt="filter" />
+                    {filterVisible && <p className="text-black">Filter</p>}
+                    </button>
+                    <button className="flex flex-row border border-[#C8C8C8] rounded-3xl p-2">
+                    <Image src={'/icons/share.svg'} width={25} height={25} alt="share" />
+                    </button>
+                    <button className="flex flex-row border border-[#C8C8C8] rounded-3xl p-2">
+                    <Image src={'/icons/sort.svg'} width={25} height={25} alt="sort" />
+                    </button>
                 </div>
-            )}
+        
+                {filterVisible && (
+                    <div className='w-full'>
+                        <Filters setFilters={(value) => setFilters(value)} filters={filters} results={results} isGridView={isGridView} setIsGridView={(value)=>setIsGridView(value)}/>
+                    </div>
+                )}
             </div>
         </div>
         </div>
