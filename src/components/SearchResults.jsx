@@ -121,7 +121,7 @@ export default function SearchResults({searchKey}) {
             About {results.length} Trademarks found for {`"${searchKey}"`}
         </h2>
         <hr />
-        <div className="flex flex-row gap-5 justify-start items-start">
+        <div className="flex flex-row w-full gap-5 justify-start items-start">
             {/* Results Table */}
             <div className="w-4/5">
             <table className="min-w-full rounded-md bg-white text-left border-collapse">
@@ -244,7 +244,9 @@ export default function SearchResults({searchKey}) {
             </div>
     
             {filterVisible && (
-                <Filters setFilters={(value) => setFilters(value)} filters={filters} results={results}/>
+                <div className='w-full'>
+                    <Filters setFilters={(value) => setFilters(value)} filters={filters} results={results}/>
+                </div>
             )}
             </div>
         </div>

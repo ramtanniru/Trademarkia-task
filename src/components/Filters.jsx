@@ -83,9 +83,10 @@ export default function Filters({ setFilters, filters, results }) {
           })}
         </div>
         </div>
-      
+
+        {/* Other Filters */}
         <div className="flex flex-col gap-5 justify-center items-center w-full bg-white p-5 rounded-2xl">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col w-full gap-4">
             <Tabs key={'underlined'} variant={'underlined'} aria-label="Tabs variants" color='primary'>
               <Tab key="owners" title="Owners">
                 <div className="flex flex-col gap-2">
